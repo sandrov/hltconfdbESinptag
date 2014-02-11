@@ -136,7 +136,18 @@ public class ModuleInstance extends Instance implements Referencable
 		while (itP.hasNext()) {
 		    Parameter p = itP.next();
 		    if (!p.isValueSet()) continue;
-		    if (p instanceof InputTagParameter) {
+		    if (p instanceof ESInputTagParameter) {
+			ESInputTagParameter esinputTag = (ESInputTagParameter)p;
+			if (esinputTag.label().equals(oldName)) {
+			    ESInputTagParameter tmp =
+				(ESInputTagParameter)esinputTag.clone(null);
+			    tmp.setLabel(name());
+			    module.updateParameter(esinputTag.fullName(),
+						   esinputTag.type(),
+						   tmp.valueAsString());
+			}
+		    }
+		    else if (p instanceof InputTagParameter) {
 			InputTagParameter inputTag = (InputTagParameter)p;
 			if (inputTag.label().equals(oldName)) {
 			    InputTagParameter tmp =

@@ -15,6 +15,7 @@ import confdb.data.ParameterContainer;
 import confdb.data.VectorParameter;
 import confdb.data.PSetParameter;
 import confdb.data.VPSetParameter;
+import confdb.data.ESInputTagParameter;
 import confdb.data.InputTagParameter;
 import confdb.data.VInputTagParameter;
 import confdb.data.IConfiguration;
@@ -170,7 +171,11 @@ public class ParameterTreeModel extends AbstractTreeTableTreeModel
 	} else if (column==1) {
 	    boolean ok = true;
 	    String label = null;
-	    if (p.type().equals("InputTag")) {
+	    if (p.type().equals("ESInputTag")) {
+		ESInputTagParameter it = (ESInputTagParameter)p;
+		label = it.label()==null ? "" : it.label();
+		ok = ( (label.equals("")) || (config.module(label)!=null) );
+	    } else if (p.type().equals("InputTag")) {
 		InputTagParameter it = (InputTagParameter)p;
 		label = it.label()==null ? "" : it.label();
 		ok = ( (label.equals("")) || (label.equals("rawDataCollector")) || (label.equals("source")) || (config.module(label)!=null) );

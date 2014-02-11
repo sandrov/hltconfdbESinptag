@@ -35,7 +35,7 @@ public class AddParameterDialog extends JDialog
     {
         "",
         "int32","uint32","int64","uint64","double","string","bool",
-        "EventID","InputTag","FileInPath","PSet",
+        "EventID","InputTag","FileInPath","PSet","ESInputTag",
         "vint32","vuint32","vint64","vuint64","vdouble","vstring",
         "VEventID","VInputTag","VPSet"
     };

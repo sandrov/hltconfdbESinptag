@@ -338,7 +338,18 @@ abstract
 					ArrayList<String> unresolved,
 					String prefix)
     {
-	if (p instanceof InputTagParameter) {
+	if (p instanceof ESInputTagParameter) {
+	    ESInputTagParameter itp = (ESInputTagParameter)p;
+
+	    if (!itp.isValueSet()||
+		itp.label().equals(new String())||
+		itp.label().equals("")) return;
+	    
+	    if (!labels.contains(itp.label())) {
+		unresolved.add(prefix+"::"+itp.name()+"="+itp.valueAsString());
+	    }
+	}
+	else if (p instanceof InputTagParameter) {
 	    InputTagParameter itp = (InputTagParameter)p;
 
 	    if (!itp.isValueSet()||

@@ -1059,6 +1059,10 @@ public class JPythonParser
                 	
             	} else  alert(msg.err, "[parseParameter] "+parameterName +" of VPSETPARAMETER expected! found " + param.getClass().toString());
             } else alert(msg.err, "[parseParameter] VPSet parameter '" + parameterName + "' not found! at Module '" + module.name() +"'");
+        } else if ("ESInputTag" == type) {
+            module.updateParameter(parameterName,type,value.toString());
+            module.findParameter(parameterName).setTracked(tracked);
+            
         } else if ("InputTag" == type) {
             module.updateParameter(parameterName,type,value.toString());
             module.findParameter(parameterName).setTracked(tracked);
@@ -1431,6 +1435,7 @@ public class JPythonParser
     	string("string"),
     	vstring("vstring"),
     	PSet("PSet"),
+    	ESInputTag("ESInputTag"),
     	InputTag("InputTag"),
     	VInputTag("VInputTag");
 

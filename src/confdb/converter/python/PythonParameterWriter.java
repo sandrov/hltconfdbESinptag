@@ -6,6 +6,7 @@ import confdb.converter.IParameterWriter;
 import confdb.converter.ascii.AsciiParameterWriter;
 import confdb.data.BoolParameter;
 import confdb.data.InputTagParameter;
+import confdb.data.ESInputTagParameter;
 import confdb.data.PSetParameter;
 import confdb.data.Parameter;
 import confdb.data.ScalarParameter;
@@ -66,6 +67,8 @@ public class PythonParameterWriter  implements IParameterWriter
 			str.append( getPythonClass( parameter ) );
 			str.append( "( " );
 			if ( parameter instanceof InputTagParameter )
+				str.append( getInputTagString( parameter.valueAsString() ) );
+			else if ( parameter instanceof ESInputTagParameter )
 				str.append( getInputTagString( parameter.valueAsString() ) );
 			else if ( parameter instanceof VPSetParameter )
 				appendVPSetParameters( str, (VPSetParameter)parameter, indent );
