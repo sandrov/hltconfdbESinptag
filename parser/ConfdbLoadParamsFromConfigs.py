@@ -328,6 +328,7 @@ class ConfdbLoadParamsfromConfigs:
                                "string":"StringParamValues",
                                "vstring":"VStringParamValues",
                                "InputTag":"InputTagParamValues",
+                               "ESInputTag":"InputTagParamValues",
                                "VInputTag":"VInputTagParamValues",
                                "EventID":"EventIDParamValues",
                                "VEventID":"VEventIDParamValues",
@@ -1086,7 +1087,7 @@ class ConfdbLoadParamsfromConfigs:
             returnid = paramid[0]
         else:
             if(parametertype == "ESInputTag"):
-                parametertype = "InputTag"
+                parametertype = "ESInputTag"
             
             parametertypeint = self.paramtypedict[parametertype]
             paramtable = self.paramtabledict[parametertype]

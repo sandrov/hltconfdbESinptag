@@ -905,6 +905,28 @@ class ConfdbOracleModuleLoader:
 			    print "INSERT INTO InputTagParamValues (paramId, value) VALUES (" + str(newparamid) + ", '" + paramval + "')"
 			thecursor.execute("INSERT INTO InputTagParamValues (paramId, value) VALUES (" + str(newparamid) + ", '" + paramval + "')")
 
+            # ESInputTag
+            elif(paramtype == "ESInputTag"):
+                type = self.paramtypedict['ESInputTag']
+
+                # Fill Parameters table
+                newparamid = self.AddNewParam(thecursor,newsuperid,paramname,type,paramistracked,paramseq)
+
+                # Fill ParameterValues table
+                if(paramval == None or paramval == ''):
+                    if(self.verbose > 2):
+                        print "No default parameter value found"
+                else:
+                    if(paramval.find("'") != -1):
+                        if(self.verbose > 2):
+                            print "INSERT INTO InputTagParamValues (paramId, value) VALUES (" + str(newparamid) + ", " + paramval + ")"
+                        thecursor.execute("INSERT INTO InputTagParamValues (paramId, value) VALUES (" + str(newparamid) + ", " + paramval + ")")
+                    else:
+                        if(self.verbose > 2):
+                            print "INSERT INTO InputTagParamValues (paramId, value) VALUES (" + str(newparamid) + ", '" + paramval + "')"
+                        thecursor.execute("INSERT INTO InputTagParamValues (paramId, value) VALUES (" + str(newparamid) + ", '" + paramval + "')")
+
+
 	    else:
 		print '\tError: Unknown param type ' + paramtype + ' ' + paramname + ' - do nothing'
                 self.globalseqcount = self.globalseqcount - 1
@@ -1668,7 +1690,7 @@ class ConfdbOracleModuleLoader:
 			print "Parameter is unchanged (" + str(oldparamval) + ", " + str(paramval) + ")"
 
 	    # InputTag
-	    if(paramtype == "InputTag"):
+	    if(paramtype == "InputTag" or paramtype == "ESInputTag"):
 		type = self.paramtypedict['InputTag']
 
 		# Get the old value of this parameter
@@ -2379,7 +2401,7 @@ class ConfdbOracleModuleLoader:
 		    print "\tWarning: Attempted to load a non-string value to FileInPath table:"
 		    print "\t\tstring " + str(psetname) + " = " + str(psetval)
 		    print "\t\tLoading parameter with no default value"
-	    elif(psettype == "InputTag"):
+	    elif(psettype == "InputTag" or psettype == "ESInputTag"):
 		if(psetval.find("'") != -1):
 		    thecursor.execute("INSERT INTO InputTagParamValues (paramId, value) VALUES (" + str(newparammemberid) + ", " + psetval + ")")
 		else:
