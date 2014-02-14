@@ -885,6 +885,13 @@ public class JPythonParser
      */
 
     /* Note:
+     * an ESInputTag could either be split in
+     *   'data', 'module'
+     * or left as a single string
+     *   'data:module'
+     */
+
+    /* Note:
      * these CMS types are not yet supported:
      *   FileInPath
      *   EventID
@@ -1079,6 +1086,18 @@ public class JPythonParser
                     module.findParameter(parameterName).setTracked(tracked);
             	} else alert(msg.err, "[parseParameter] parameter not VectorParameter! " + parameterName);
             } else alert(msg.err, "[parseParameter] VInputTag parameter '" + parameterName + "' not found! at Module '" + module.name() +"'");
+        } else if ("VESInputTag" == type) {
+            confdb.data.Parameter param = module.findParameter(parameterName);
+            if(param != null) {
+            	if(param instanceof VectorParameter) {
+            		VectorParameter param_sp = (VectorParameter) param;
+            		String clean_value = cleanBrackets(value.toString());
+            		param_sp.setValue(clean_value);
+            		
+                    module.updateParameter(parameterName,type,clean_value);
+                    module.findParameter(parameterName).setTracked(tracked);
+            	} else alert(msg.err, "[parseParameter] parameter not VectorParameter! " + parameterName);
+            } else alert(msg.err, "[parseParameter] VESInputTag parameter '" + parameterName + "' not found! at Module '" + module.name() +"'");
         } else {
         	alert(msg.war, "[parseParameter] TYPE: [unsupported] " + type);
         }
@@ -1437,7 +1456,8 @@ public class JPythonParser
     	PSet("PSet"),
     	ESInputTag("ESInputTag"),
     	InputTag("InputTag"),
-    	VInputTag("VInputTag");
+    	VInputTag("VInputTag"),
+    	VESInputTag("VESInputTag");
 
     	  private String text;
 

@@ -342,10 +342,10 @@ abstract
 	    ESInputTagParameter itp = (ESInputTagParameter)p;
 
 	    if (!itp.isValueSet()||
-		itp.label().equals(new String())||
-		itp.label().equals("")) return;
+		itp.data().equals(new String())||
+		itp.data().equals("")) return;
 	    
-	    if (!labels.contains(itp.label())) {
+	    if (!labels.contains(itp.data())) {
 		unresolved.add(prefix+"::"+itp.name()+"="+itp.valueAsString());
 	    }
 	}
@@ -367,6 +367,16 @@ abstract
 	    for (int i=0;i<vitp.vectorSize();i++) {
 		InputTagParameter itp =
 		    new InputTagParameter("["+(new Integer(i)).toString()+"]",
+					  vitp.value(i).toString(),false);
+		itp.setParent(vitp);
+		getUnresolvedInputTags(itp,labels,unresolved,prefix+"::"+vitp.name());
+	    }
+	}
+	else if (p instanceof VESInputTagParameter) {
+	    VESInputTagParameter vitp = (VESInputTagParameter)p;
+	    for (int i=0;i<vitp.vectorSize();i++) {
+		ESInputTagParameter itp =
+		    new ESInputTagParameter("["+(new Integer(i)).toString()+"]",
 					  vitp.value(i).toString(),false);
 		itp.setParent(vitp);
 		getUnresolvedInputTags(itp,labels,unresolved,prefix+"::"+vitp.name());

@@ -264,6 +264,7 @@ public class ConfDB
     private PreparedStatement psInsertVStringParamValue           = null;
     private PreparedStatement psInsertVEventIDParamValue          = null;
     private PreparedStatement psInsertVInputTagParamValue         = null;
+    private PreparedStatement psInsertVESInputTagParamValue         = null;
 
     private PreparedStatement psDeleteDirectory                   = null;
     private PreparedStatement psDeleteLock                        = null;
@@ -5168,6 +5169,7 @@ public class ConfDB
 		 "VALUES (?, ?, ?)");
 	    preparedStatements.add(psInsertVInputTagParamValue);
 
+
 	    
 	    //
 	    // DELETE
@@ -5732,6 +5734,7 @@ public class ConfDB
 	insertParameterHashMap.put("ESInputTag",  psInsertInputTagParamValue);
 	insertParameterHashMap.put("InputTag",  psInsertInputTagParamValue);
 	insertParameterHashMap.put("VInputTag", psInsertVInputTagParamValue);
+	insertParameterHashMap.put("VESInputTag", psInsertVInputTagParamValue);
 	insertParameterHashMap.put("FileInPath",psInsertFileInPathParamValue);
 
 	ResultSet rs = null;
@@ -6186,7 +6189,7 @@ public class ConfDB
 		    }
 		    else if (vp instanceof VUInt64Parameter) {
 			psInsertParameterValue.setObject(3,((BigInteger)vp.value(i)).longValue());
-		    } else if (vp instanceof VInputTagParameter) {
+		    } else if ((vp instanceof VInputTagParameter)||(vp instanceof VESInputTagParameter)) {
 		    	// fix to bug #90850: "Export Configuration Failed"
 		    	String value = (String) vp.value(i);
 		    	if(value.isEmpty()) value = "\"\"";		 

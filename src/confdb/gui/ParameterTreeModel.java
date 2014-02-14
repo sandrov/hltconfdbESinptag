@@ -18,6 +18,7 @@ import confdb.data.VPSetParameter;
 import confdb.data.ESInputTagParameter;
 import confdb.data.InputTagParameter;
 import confdb.data.VInputTagParameter;
+import confdb.data.VESInputTagParameter;
 import confdb.data.IConfiguration;
 import confdb.data.*;
 
@@ -171,10 +172,11 @@ public class ParameterTreeModel extends AbstractTreeTableTreeModel
 	} else if (column==1) {
 	    boolean ok = true;
 	    String label = null;
+	    String data = null;
 	    if (p.type().equals("ESInputTag")) {
 		ESInputTagParameter it = (ESInputTagParameter)p;
-		label = it.label()==null ? "" : it.label();
-		ok = ( (label.equals("")) || (config.module(label)!=null) );
+		data = it.data()==null ? "" : it.data();
+		ok = ( (data.equals("")) || (config.module(data)!=null) );
 	    } else if (p.type().equals("InputTag")) {
 		InputTagParameter it = (InputTagParameter)p;
 		label = it.label()==null ? "" : it.label();
@@ -186,7 +188,15 @@ public class ParameterTreeModel extends AbstractTreeTableTreeModel
 		    ok = ( (label.equals("")) || (label.equals("rawDataCollector")) || (label.equals("source")) || (config.module(label)!=null) );
 		    if (!ok) break;
 		}
-	    }
+            } else if (p.type().equals("VESInputTag")) {
+                VESInputTagParameter vit = (VESInputTagParameter)p;
+                for (int i=0; i<vit.vectorSize(); i++) {
+                    data = vit.data(i)==null ? "" : vit.data(i);
+                    ok = ( (data.equals("")) || (config.module(data)!=null) );
+                    if (!ok) break;
+                }
+            }
+
 	    result = p.type();
 	    if (!ok) result = "<html><font color=#ff0000>"+result+"</font></html>";
 	    return result;

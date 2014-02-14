@@ -1330,6 +1330,7 @@ INSERT INTO ParameterTypes VALUES (16,'vint64');
 INSERT INTO ParameterTypes VALUES (17,'uint64');
 INSERT INTO ParameterTypes VALUES (18,'vuint64');
 INSERT INTO ParameterTypes VALUES (19,'ESInputTag');
+INSERT INTO ParameterTypes VALUES (20,'VESInputTag');
 
 
 COMMIT;

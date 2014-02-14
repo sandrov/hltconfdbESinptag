@@ -307,7 +307,7 @@ BEGIN
     END IF;
     CLOSE cur_inputtag;
   /** load vinputtag values */
-  ELSIF parameter_type='VInputTag'
+  ELSIF parameter_type='VInputTag' OR parameter_type='VESInputTag'
   THEN
     OPEN cur_vinputtag;
     LOOP

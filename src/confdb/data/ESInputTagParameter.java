@@ -16,14 +16,12 @@ public class ESInputTagParameter extends ScalarParameter
     /** parameter type string */
     private static final String type = "ESInputTag";
     
-    /** first value: label */
-    private String label = null;
+    /** first value: data */
+    private String data = null;
     
-    /** second value: instance */
-    private String instance = null;
+    /** second value: module */
+    private String module = null;
     
-    /** third value: process */
-    private String process = null;
     
     
     //
@@ -32,15 +30,14 @@ public class ESInputTagParameter extends ScalarParameter
 
     /** standard constructor */
     public ESInputTagParameter(String name,
-			     String label,String instance,String process,
+			     String data,String module,
 			     boolean isTracked)
     {
 	super(name,isTracked);
-	isValueSet = (label!=null&&instance!=null&&process!=null);
+	isValueSet = (data!=null&&module!=null);
 	if (isValueSet) {
-	    this.label    = new String(label);
-	    this.instance = new String(instance);
-	    this.process  = new String(process);
+	    this.data    = new String(data);
+	    this.module = new String(module);
 	}
     }
     
@@ -60,7 +57,7 @@ public class ESInputTagParameter extends ScalarParameter
     public Parameter clone(Object parent)
     {
 	ESInputTagParameter result =
-	    new ESInputTagParameter(name,label,instance,process,isTracked);
+	    new ESInputTagParameter(name,data,module,isTracked);
 	result.setParent(parent);
 	return result;
     }
@@ -74,23 +71,20 @@ public class ESInputTagParameter extends ScalarParameter
 	return (isValueSet) ? valueAsString() : null;
     }
     
-    /** get label */
-    public String label() { return label; }
+    /** get data */
+    public String data() { return data; }
 
-    /** get instance */
-    public String instance() { return instance; }
+    /** get module */
+    public String module() { return module; }
 
-    /** get process */
-    public String process() { return process; }
     
     /** retrieve the value of the parameter as a string */
     public String valueAsString()
     {
 	if (isValueSet) {
-	    String result = label;
-	    if (instance.length()>0||process.length()>0)
-		result += ":" + instance;
-	    if (process.length()>0)  result += ":" + process;
+	    String result = data;
+	    if (module.length()>0)
+		result += ":" + module;
 	    if (result.equals(new String())) result = "\"\"";
 	    return result;
 	}
@@ -102,9 +96,8 @@ public class ESInputTagParameter extends ScalarParameter
     {
 	if (valueAsString==null||valueAsString.length()==0) {
 	    isValueSet = false;
-	    label      = null;
-	    instance   = null;
-	    process    = null;
+	    data      = null;
+	    module   = null;
 	}
 	else {
 	    if ((valueAsString.startsWith("'") &&valueAsString.endsWith("'"))||
@@ -113,23 +106,19 @@ public class ESInputTagParameter extends ScalarParameter
 	    
 	    String[] strValues = valueAsString.split(":");
 	    if (strValues.length==0||strValues.length>3) return false;
-	    label = strValues[0];
-	    if (strValues.length>1) instance = strValues[1];
-	    else instance = "";
-	    if (strValues.length>2) process = strValues[2];
-	    else process = "";
+	    data = strValues[0];
+	    if (strValues.length>1) module = strValues[1];
+	    else module = "";
 	    isValueSet = true;
 	}
 	return true;
     }
 
-    /** set label */
-    public void setLabel(String label) { this.label = label; }
+    /** set data */
+    public void setData(String data) { this.data = data; }
     
-    /** set instance */
-    public void setInstance(String instance) { this.instance = instance; }
+    /** set data */
+    public void setModule(String module) { this.module = module; }
 
-    /** set process */
-    public void setProcess(String process) { this.process = process; }
 
 }

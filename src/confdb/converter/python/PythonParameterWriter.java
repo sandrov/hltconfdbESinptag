@@ -12,6 +12,7 @@ import confdb.data.Parameter;
 import confdb.data.ScalarParameter;
 import confdb.data.StringParameter;
 import confdb.data.VInputTagParameter;
+import confdb.data.VESInputTagParameter;
 import confdb.data.VPSetParameter;
 import confdb.data.VStringParameter;
 import confdb.data.VectorParameter;
@@ -219,6 +220,16 @@ public class PythonParameterWriter  implements IParameterWriter
 			{
 				String inputTag = (String)vector.value(i);
 				str.append( "'" + inputTag + "'," );
+			}
+			if ( stop > start )
+				str.setLength( str.length() - 1 );
+                }
+		if ( vector instanceof VESInputTagParameter )
+		{
+			for ( int i = start; i < stop; i++ )
+			{
+				String ESinputTag = (String)vector.value(i);
+				str.append( "'" + ESinputTag + "'," );
 			}
 			if ( stop > start )
 				str.setLength( str.length() - 1 );
